@@ -1,70 +1,70 @@
 # websocket-real-time-stock-market-dashboard
 
-Client untuk dashboard pasar saham real-time berbasis React + Vite. Aplikasi ini menampilkan pergerakan harga saham, chart harga, dan order book yang diperbarui lewat WebSocket.
+Client for the real-time stock market dashboard built with React + Vite. The application displays stock price movements, a price chart, and an order book that is updated through WebSocket messages.
 
-## Fitur
+## Features
 
-- Status koneksi WebSocket langsung di header.
-- Ticker strip untuk melihat daftar saham dan memilih simbol aktif.
-- Chart harga real-time menggunakan Recharts.
-- Order book untuk bid dan ask dari simbol yang dipilih.
-- Auto reconnect jika koneksi websocket terputus.
+- Live WebSocket connection status in the header.
+- Ticker strip for browsing stocks and selecting the active symbol.
+- Real-time price chart powered by Recharts.
+- Bid and ask order book for the selected symbol.
+- Auto-reconnect when the WebSocket connection drops.
 
-## Struktur Client
+## Client Structure
 
-- `src/App.jsx` - komponen utama dashboard dan pengelola state aplikasi.
-- `src/hooks/useWebSocket.js` - hook untuk koneksi, receive message, dan auto reconnect.
-- `src/components/PriceChart.jsx` - visualisasi grafik harga.
-- `src/components/OrderBook.jsx` - tampilan order book bid/ask.
-- `src/index.css` - styling utama aplikasi.
+- `src/App.jsx` - main dashboard component and application state manager.
+- `src/hooks/useWebSocket.js` - hook for connection handling, message reception, and auto reconnect.
+- `src/components/PriceChart.jsx` - price chart visualization.
+- `src/components/OrderBook.jsx` - bid/ask order book view.
+- `src/index.css` - main application styling.
 
-## Prasyarat
+## Requirements
 
-- Node.js 18 atau lebih baru.
-- Backend WebSocket yang berjalan di `ws://localhost:8080`.
+- Node.js 18 or newer.
+- A WebSocket backend running at `ws://localhost:8080`.
 
-## Instalasi
+## Installation
 
-Jalankan perintah berikut dari folder `client`:
+Run the following command from the `client` folder:
 
 ```bash
 npm install
 ```
 
-## Menjalankan Aplikasi
+## Running the Application
 
-Mode development:
+Development mode:
 
 ```bash
 npm run dev
 ```
 
-Build production:
+Production build:
 
 ```bash
 npm run build
 ```
 
-Preview hasil build:
+Preview the production build:
 
 ```bash
 npm run preview
 ```
 
-Lint source code:
+Lint the source code:
 
 ```bash
 npm run lint
 ```
 
-## Cara Kerja Data
+## Data Flow
 
-Client membuka koneksi ke WebSocket server dan menunggu payload bertipe:
+The client connects to the WebSocket server and waits for payloads of the following types:
 
-- `INITIAL_SNAPSHOT` - snapshot awal data pasar.
-- `MARKET_UPDATE` - pembaruan harga dan perubahan pasar.
+- `INITIAL_SNAPSHOT` - initial market data snapshot.
+- `MARKET_UPDATE` - market price and change updates.
 
-Jika respons memiliki `orderBook`, data tersebut dipakai untuk mengisi bid dan ask pada simbol aktif. Saat user memilih ticker lain, client mengirim pesan:
+If the response includes `orderBook`, that data is used to populate the bid and ask lists for the active symbol. When the user selects another ticker, the client sends:
 
 ```json
 {
@@ -73,18 +73,18 @@ Jika respons memiliki `orderBook`, data tersebut dipakai untuk mengisi bid dan a
 }
 ```
 
-## Catatan Tampilan
+## Visual Notes
 
-- Warna hijau menandakan pergerakan harga naik.
-- Warna merah menandakan pergerakan harga turun.
-- Chart menampilkan riwayat harga hingga 60 titik terakhir per simbol.
+- Green indicates a price increase.
+- Red indicates a price decrease.
+- The chart shows up to 60 recent price points per symbol.
 
-## Dependensi Utama
+## Main Dependencies
 
 - React 19
 - Recharts
 - Vite
 
-## Lisensi
+## License
 
-Proyek ini belum memiliki informasi lisensi khusus.
+No project-specific license information is documented here.

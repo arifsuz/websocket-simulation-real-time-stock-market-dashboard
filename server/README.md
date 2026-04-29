@@ -1,47 +1,47 @@
 # websocket-real-time-stock-market-dashboard - Server
 
-Server WebSocket untuk mensimulasikan data pasar saham real-time. Server ini mengirim snapshot awal ke client, lalu membroadcast pembaruan harga secara berkala dan merespons permintaan order book untuk simbol tertentu.
+WebSocket server for simulating real-time stock market data. This server sends an initial snapshot to the client, broadcasts periodic price updates, and responds to order book requests for specific symbols.
 
-## Fitur
+## Features
 
-- WebSocket server di `ws://localhost:8080`.
-- Kirim snapshot awal saat client terhubung.
-- Broadcast update pasar setiap `800ms`.
-- Generate order book palsu untuk simbol saham.
-- Mendukung request order book per simbol dari client.
+- WebSocket server at `ws://localhost:8080`.
+- Sends an initial snapshot when a client connects.
+- Broadcasts market updates every `800ms`.
+- Generates simulated order book data for stock symbols.
+- Supports symbol-based order book requests from the client.
 
-## Teknologi
+## Technology
 
 - Node.js
-- `ws` sebagai library WebSocket server
+- `ws` as the WebSocket server library
 
-## Prasyarat
+## Requirements
 
-- Node.js 18 atau lebih baru.
+- Node.js 18 or newer.
 
-## Instalasi
+## Installation
 
-Jalankan perintah berikut dari folder `server`:
+Run the following command from the `server` folder:
 
 ```bash
 npm install
 ```
 
-## Menjalankan Server
+## Running the Server
 
-Server saat ini dijalankan langsung dengan Node:
+The server is currently started directly with Node:
 
 ```bash
 node index.js
 ```
 
-Saat aktif, server akan menampilkan log bahwa WebSocket berjalan di `ws://localhost:8080`.
+When active, the server will log that WebSocket is running at `ws://localhost:8080`.
 
-## Struktur Data
+## Data Structure
 
-### Data awal saham
+### Initial stock data
 
-Server menginisialisasi beberapa simbol berikut:
+The server initializes the following symbols:
 
 - `AAPL`
 - `GOOGL`
@@ -49,35 +49,35 @@ Server menginisialisasi beberapa simbol berikut:
 - `MSFT`
 - `NVDA`
 
-Setiap simbol memiliki properti:
+Each symbol has the following properties:
 
-- `price` - harga terakhir.
-- `change` - persentase perubahan terhadap tick sebelumnya.
+- `price` - the latest price.
+- `change` - percentage change from the previous tick.
 
-### Simulasi harga
+### Price simulation
 
-Setiap `800ms`, server akan:
+Every `800ms`, the server will:
 
-1. Mengubah harga setiap saham secara acak dengan sedikit bias naik.
-2. Menghitung persentase perubahan harga.
-3. Mengirim payload `MARKET_UPDATE` ke semua client.
+1. Change each stock price randomly with a slight upward bias.
+2. Calculate the percentage price change.
+3. Send a `MARKET_UPDATE` payload to all clients.
 
 ### Order book
 
-Order book dibuat secara simulasi dari harga dasar simbol aktif. Server mengirim:
+The order book is simulated from the active symbol's base price. The server sends:
 
-- `bids` - daftar harga beli.
-- `asks` - daftar harga jual.
+- `bids` - buy price levels.
+- `asks` - sell price levels.
 
-Setiap sisi berisi 8 level harga.
+Each side contains 8 price levels.
 
-## Event WebSocket
+## WebSocket Events
 
 ### `INITIAL_SNAPSHOT`
 
-Dikirim sekali ke client baru setelah koneksi berhasil.
+Sent once to a newly connected client after the connection is established.
 
-Contoh payload:
+Example payload:
 
 ```json
 {
@@ -95,9 +95,9 @@ Contoh payload:
 
 ### `MARKET_UPDATE`
 
-Broadcast ke semua client setiap `800ms`.
+Broadcast to all clients every `800ms`.
 
-Contoh payload:
+Example payload:
 
 ```json
 {
@@ -116,9 +116,9 @@ Contoh payload:
 
 ### `REQUEST_ORDERBOOK`
 
-Client dapat meminta order book untuk simbol tertentu.
+Client request for a specific symbol order book.
 
-Contoh pesan dari client:
+Example client message:
 
 ```json
 {
@@ -127,9 +127,9 @@ Contoh pesan dari client:
 }
 ```
 
-Jika simbol valid, server akan membalas dengan `ORDERBOOK_UPDATE`.
+If the symbol is valid, the server responds with `ORDERBOOK_UPDATE`.
 
-Contoh balasan:
+Example response:
 
 ```json
 {
@@ -140,12 +140,12 @@ Contoh balasan:
 }
 ```
 
-## Integrasi dengan Client
+## Client Integration
 
-Client React pada proyek ini terhubung ke server melalui `ws://localhost:8080`. Saat user memilih ticker, client mengirim `REQUEST_ORDERBOOK` untuk simbol aktif, lalu menampilkan chart dan order book dari data yang diterima.
+The React client in this project connects to the server through `ws://localhost:8080`. When the user selects a ticker, the client sends `REQUEST_ORDERBOOK` for the active symbol, then displays the chart and order book from the received data.
 
-## Catatan Pengembangan
+## Development Notes
 
-- Server ini adalah simulator, bukan koneksi ke market data sungguhan.
-- Data harga dan order book dihasilkan secara acak untuk kebutuhan demo UI.
-- Jika ingin mengganti endpoint WebSocket, sesuaikan URL di hook client `useWebSocket`.
+- This server is a simulator, not a live market data connection.
+- Price and order book data are generated randomly for UI demo purposes.
+- If you want to change the WebSocket endpoint, update the URL in the client hook `useWebSocket`.

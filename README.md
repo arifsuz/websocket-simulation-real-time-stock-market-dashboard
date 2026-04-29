@@ -1,30 +1,30 @@
 # websocket-real-time-stock-market-dashboard
 
-Proyek ini adalah dashboard pasar saham real-time berbasis WebSocket. Repository ini terdiri dari dua bagian utama:
+This project is a real-time stock market dashboard powered by WebSocket. The repository is split into two main parts:
 
-- `client` untuk tampilan dashboard dengan React + Vite.
-- `server` untuk simulasi data pasar dan penyedia feed WebSocket.
+- `client` for the dashboard UI built with React + Vite.
+- `server` for simulated market data and the WebSocket feed.
 
-## Ringkasan
+## Overview
 
-Aplikasi menampilkan:
+The application displays:
 
-- daftar saham yang terus diperbarui,
-- chart harga real-time per simbol,
-- order book bid dan ask,
-- status koneksi WebSocket secara langsung.
+- a live-updating stock list,
+- a real-time price chart per symbol,
+- bid and ask order book data,
+- live WebSocket connection status.
 
-Server mengirim snapshot awal saat client tersambung, lalu membroadcast pembaruan harga setiap `800ms`. Client juga dapat meminta order book untuk simbol tertentu saat user berpindah ticker.
+The server sends an initial snapshot when a client connects, then broadcasts price updates every `800ms`. The client can also request the order book for a specific symbol when the user changes the active ticker.
 
-## Fitur Utama
+## Key Features
 
-- Update harga saham real-time melalui WebSocket.
-- Chart harga historis untuk simbol aktif.
-- Order book simulasi untuk bid dan ask.
-- Auto reconnect ketika koneksi WebSocket terputus.
-- Struktur modular antara client dan server.
+- Real-time stock price updates over WebSocket.
+- Historical price chart for the active symbol.
+- Simulated bid and ask order book data.
+- Auto-reconnect when the WebSocket connection drops.
+- Modular client and server structure.
 
-## Teknologi
+## Technology Stack
 
 - React 19
 - Vite
@@ -32,7 +32,7 @@ Server mengirim snapshot awal saat client tersambung, lalu membroadcast pembarua
 - Node.js
 - ws
 
-## Struktur Proyek
+## Project Structure
 
 ```text
 websocket-real-time-stock-market-dashboard/
@@ -51,14 +51,14 @@ websocket-real-time-stock-market-dashboard/
 └── README.md
 ```
 
-## Prasyarat
+## Requirements
 
-- Node.js 18 atau lebih baru.
+- Node.js 18 or newer.
 - npm.
 
-## Instalasi
+## Installation
 
-Clone atau buka repository ini, lalu install dependensi pada masing-masing folder:
+Clone or open this repository, then install dependencies in each folder:
 
 ```bash
 cd client
@@ -68,88 +68,88 @@ cd ../server
 npm install
 ```
 
-## Menjalankan Aplikasi
+## Running the Application
 
-Jalankan server terlebih dahulu, lalu client.
+Run the server first, then the client.
 
-### 1. Jalankan Server
+### 1. Start the Server
 
 ```bash
 cd server
 node index.js
 ```
 
-Server akan berjalan di:
+The server will run at:
 
 ```text
 ws://localhost:8080
 ```
 
-### 2. Jalankan Client
+### 2. Start the Client
 
 ```bash
 cd client
 npm run dev
 ```
 
-Secara default Vite akan menampilkan URL lokal di terminal, biasanya:
+By default, Vite will print a local URL in the terminal, usually:
 
 ```text
 http://localhost:5173
 ```
 
-## Skrip Tersedia
+## Available Scripts
 
 ### Client
 
-Jalankan dari folder `client`.
+Run these from the `client` folder.
 
-- `npm run dev` - menjalankan mode development.
-- `npm run build` - membuat build produksi.
-- `npm run preview` - melihat hasil build secara lokal.
-- `npm run lint` - menjalankan ESLint.
+- `npm run dev` - start development mode.
+- `npm run build` - create a production build.
+- `npm run preview` - preview the production build locally.
+- `npm run lint` - run ESLint.
 
 ### Server
 
-Jalankan dari folder `server`.
+Run this from the `server` folder.
 
-- `node index.js` - menjalankan WebSocket server.
+- `node index.js` - start the WebSocket server.
 
-## Arsitektur Sistem
+## System Architecture
 
 ### Client
 
-Client React memiliki tanggung jawab berikut:
+The React client is responsible for:
 
-- membuka koneksi ke WebSocket server,
-- menerima snapshot dan update pasar,
-- menyimpan history harga per simbol,
-- menampilkan chart dan order book,
-- meminta order book baru saat user memilih simbol.
+- opening a connection to the WebSocket server,
+- receiving market snapshots and updates,
+- storing price history per symbol,
+- rendering the chart and order book,
+- requesting a new order book when the user selects a symbol.
 
 ### Server
 
-Server Node.js bertanggung jawab untuk:
+The Node.js server is responsible for:
 
-- menyimpan data saham simulasi,
-- mengubah harga secara berkala,
-- membroadcast update ke semua client yang terhubung,
-- melayani request order book berdasarkan simbol.
+- storing simulated stock data,
+- updating prices on a fixed interval,
+- broadcasting updates to all connected clients,
+- serving order book requests by symbol.
 
-## Alur Data
+## Data Flow
 
-1. Client membuka koneksi ke `ws://localhost:8080`.
-2. Server mengirim `INITIAL_SNAPSHOT`.
-3. Server membroadcast `MARKET_UPDATE` setiap `800ms`.
-4. Client menyimpan data harga ke history chart.
-5. Saat user memilih simbol, client mengirim `REQUEST_ORDERBOOK`.
-6. Server merespons dengan `ORDERBOOK_UPDATE` jika simbol valid.
+1. The client connects to `ws://localhost:8080`.
+2. The server sends `INITIAL_SNAPSHOT`.
+3. The server broadcasts `MARKET_UPDATE` every `800ms`.
+4. The client stores price data in chart history.
+5. When the user selects a symbol, the client sends `REQUEST_ORDERBOOK`.
+6. The server responds with `ORDERBOOK_UPDATE` if the symbol is valid.
 
-## Format Pesan WebSocket
+## WebSocket Message Format
 
 ### `INITIAL_SNAPSHOT`
 
-Payload awal untuk client baru.
+Initial payload for a newly connected client.
 
 ```json
 {
@@ -167,7 +167,7 @@ Payload awal untuk client baru.
 
 ### `MARKET_UPDATE`
 
-Update pasar yang dibroadcast berkala.
+Periodic market update broadcast.
 
 ```json
 {
@@ -186,7 +186,7 @@ Update pasar yang dibroadcast berkala.
 
 ### `REQUEST_ORDERBOOK`
 
-Request dari client untuk meminta order book simbol tertentu.
+Client request for a specific symbol order book.
 
 ```json
 {
@@ -197,7 +197,7 @@ Request dari client untuk meminta order book simbol tertentu.
 
 ### `ORDERBOOK_UPDATE`
 
-Respons server untuk request order book valid.
+Server response for a valid order book request.
 
 ```json
 {
@@ -208,53 +208,53 @@ Respons server untuk request order book valid.
 }
 ```
 
-## Konfigurasi Penting
+## Important Configuration
 
-- URL WebSocket client diatur di `client/src/App.jsx` melalui hook `useWebSocket("ws://localhost:8080")`.
-- Jika port server berubah, URL tersebut harus disesuaikan.
-- Server saat ini menggunakan data simulasi, bukan data market live.
+- The client WebSocket URL is defined in `client/src/App.jsx` through `useWebSocket("ws://localhost:8080")`.
+- If the server port changes, update that URL accordingly.
+- The current server uses simulated data instead of live market data.
 
-## Catatan Implementasi
+## Implementation Notes
 
-- Chart harga menampilkan hingga 60 titik terakhir per simbol.
-- Warna hijau menandakan kenaikan harga.
-- Warna merah menandakan penurunan harga.
-- Order book disimulasikan dengan 8 level bid dan 8 level ask.
-- Client memiliki auto reconnect ketika koneksi tertutup.
+- The price chart keeps up to 60 recent points per symbol.
+- Green indicates a price increase.
+- Red indicates a price decrease.
+- The order book is simulated with 8 bid levels and 8 ask levels.
+- The client automatically reconnects when the connection closes.
 
 ## Troubleshooting
 
-### Client tidak terhubung ke server
+### The client cannot connect to the server
 
-- Pastikan server sudah berjalan di `ws://localhost:8080`.
-- Pastikan tidak ada proses lain yang memakai port `8080`.
-- Periksa URL WebSocket di client jika port berubah.
+- Make sure the server is running at `ws://localhost:8080`.
+- Make sure no other process is using port `8080`.
+- Check the WebSocket URL in the client if the port has changed.
 
-### Data tidak muncul di dashboard
+### No data appears in the dashboard
 
-- Pastikan pesan dari server berformat JSON valid.
-- Pastikan browser tidak memblokir koneksi WebSocket.
-- Refresh halaman setelah server aktif jika diperlukan.
+- Make sure the server is sending valid JSON messages.
+- Make sure the browser is not blocking the WebSocket connection.
+- Refresh the page after the server starts if needed.
 
-### Order book tidak berubah saat ganti simbol
+### The order book does not change when switching symbols
 
-- Pastikan client mengirim `REQUEST_ORDERBOOK` saat ticker dipilih.
-- Pastikan simbol yang diminta ada di daftar saham server.
+- Make sure the client sends `REQUEST_ORDERBOOK` when a ticker is selected.
+- Make sure the requested symbol exists in the server stock list.
 
-## Dokumentasi Terkait
+## Related Documentation
 
-- [Dokumentasi client](client/README.md)
-- [Dokumentasi server](server/README.md)
+- [Client documentation](client/README.md)
+- [Server documentation](server/README.md)
 
-## Pengembangan Lanjutan
+## Future Improvements
 
-Beberapa arah pengembangan yang masuk akal:
+Some natural next steps for the project are:
 
-- mengganti data simulasi dengan feed market asli,
-- menambah chart multi-timeframe,
-- menambahkan filter dan pencarian simbol,
-- menambah auth atau pembatasan koneksi WebSocket,
-- menambah test dan observability untuk server.
+- replacing the simulated data with a real market data feed,
+- adding multi-timeframe charts,
+- adding symbol filtering and search,
+- adding authentication or connection limits for WebSocket clients,
+- adding tests and observability for the server.
 
 ## [License](LICENSE)
 
